@@ -13,7 +13,7 @@ def timeclock(request):
     #     'user': User.objects.get(id=request.session['user_id']),
     # }
     timesheet = Timesheet.objects.last()
-    timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p" "%B %d, %Y")
+    # timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p" "%B %d, %Y")
     context = {
         'timesheet': timesheet
     }
@@ -22,7 +22,7 @@ def timeclock(request):
 def user_timecard(request):
     context = {
     #     # 'user': User.objects.get(id=request.session['user_id']),
-        'timesheet': Timesheet.objects.all()
+        'all_timesheets': Timesheet.objects.all()
     }
     return render(request, 'user_timecard.html', context)
 

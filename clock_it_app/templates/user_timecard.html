@@ -22,6 +22,7 @@
             <!-- <h3>Employee Name: Jon Snow</h3>
             <h3>Employee PIN: 1234</h3>
             <h3>Employee Timecard History:</h3> -->
+            {% if all_timesheets %}
             <table>
                 <tr>
                     <th>Date</th>
@@ -29,16 +30,21 @@
                     <th>Clocked Out</th>
                     <th>Number of Hours</th>
                 </tr>
+                {% for timesheet in all_timesheets %}
                 <tr>
-                    <td>08/08/2020</td>
-                    <td>9:00 am</td>
-                    <td>3:00 pm</td>
-                    <td>6</td>
+                    <td>{{ timesheet.clock_in_time}}</td>
+                    <td>{{ timesheet.clock_in_time }}</td>
+                    <td>{{ timesheet.clock_out_time }}</td>
+                    <td>{{ timesheet.clock_out_time }}</td>
                 </tr>
+                {% endfor %}
             </table>  
+            <h3>Go to <a href="/account/timeclock">Timeclock</a></h3>
+            {% else %}
             <!-- Show employee if no time card exists/new employee -->
             <h3>No timecard history in the system, clock in to get started.</h3>
             <a href="/account/timeclock"><button>Clock In</button></a>
+            {% endif %}
              <!-- Show admin if no time card exists/new employee -->
              <!-- <h3>No timecard history in the system, this is a new employee.</h3> -->
         </div>
