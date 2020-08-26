@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Clock</title>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <!-- Insert logo and link for main page below -->
+            <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+            <div id="logout">
+                <a class="logout" href="#">Log Out</a>
+            </div>
+        </header>
+        <div id="container">
+            <h2>You are logged in employee of Microsoft</h2>
+        {% if not timesheet or timesheet.clock_out_time %}
+            {% if timesheet %}
+            <h2>You last clocked out at {{ timesheet.clock_out_time }}</h2>
+            {% endif %}
+            <form action="/account/clock_in" method="POST">
+            {% csrf_token %}
+                <input type="submit" value="Clock In">
+            </form>
+        {% else %}
+            <h2>You clocked in at {{ timesheet.clock_in_time }}</h2>
+            <form action="/account/clock_out" method="POST">
+            {% csrf_token %}
+                <input type="submit" value="Clock Out">
+            </form>
+        {% endif %}
+            <!-- Insert link for timecard below -->
+            <h2>See Your <a href="/account/timecard">Timecard</a></h2>
+        </div>
+    </div>    
+</body>
+</html>
