@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <h1>{{company.name}}</h1>
+  </header>
+  {% if company.code %}
+  <a href="/company/{{company.id}}/time-entry-dashboard" class="view-dashboard">Time Entry Dashboard</a>
+  <div class="company-code">
+    <p>Your company code is </span><span>{{company.code}}</p>
+    <p>Share with your employees for their registration</p>
+  </div>
+  {% else %}
+  <h3>Generate a code and invite employees!</h3>
+  <form action="/company/{{company.id}}/generate-code">
+    <button>Generate Code</button>
+  </form>
+  {% endif %}
+</body>
+
+</html>
