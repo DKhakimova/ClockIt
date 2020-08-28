@@ -1,11 +1,44 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from datetime import datetime
+from time import strftime
 from django.contrib import messages
-from .models import Company, User
+from .models import Company, User, Timesheet
 import uuid
 
 def newCompany(request):
     return render(request, 'create_company.html')
 
+def index(request):
+    return HttpResponse("hello guys")
+
+def timeclock(request):
+    # context = {
+    #     'user': User.objects.get(id=request.session['user_id']),
+    # }
+    timesheet = Timesheet.objects.last()
+    # timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p" "%B %d, %Y")
+    context = {
+        'timesheet': timesheet
+    }
+    return render(request, 'time_clock.html', context)
+
+def user_timecard(request):
+    context = {
+    #     # 'user': User.objects.get(id=request.session['user_id']),
+        'all_timesheets': Timesheet.objects.all()
+    }
+    return render(request, 'user_timecard.html', context)
+
+def clock_in(request):
+    # user = User.objects.get(id=request.session['user_id'])
+    Timesheet.objects.create()
+    return redirect("/account/timeclock")
+    
+def clock_out(request):
+    timesheet = Timesheet.objects.last()
+    timesheet.clock_out_time = datetime.now()
+    timesheet.save()
+    return redirect("/account/timeclock")
 
 def createCompany(request):
     errors = Company.objects.validate(request.POST)

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timecard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <!-- Insert logo and link for main page below -->
+            <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+            <div id="logout">
+                <a class="logout" href="/logout">Log Out</a>
+            </div>
+        </header>
+        <div id="container">
+            <!-- If user is employee show -->
+            <h2>Your PIN for Microsoft is 1234</h2>
+            <h3>Timecard History:</h3>
+            <!-- If user is admin show: -->
+            <!-- <h3>Employee Name: Jon Snow</h3>
+            <h3>Employee PIN: 1234</h3>
+            <h3>Employee Timecard History:</h3> -->
+            {% if all_timesheets %}
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Clocked In</th>
+                    <th>Clocked Out</th>
+                    <th>Number of Hours</th>
+                </tr>
+                {% for timesheet in all_timesheets %}
+                <tr>
+                    <td>{{ timesheet.clock_in_time}}</td>
+                    <td>{{ timesheet.clock_in_time }}</td>
+                    <td>{{ timesheet.clock_out_time }}</td>
+                    <td>{{ timesheet.clock_out_time }}</td>
+                </tr>
+                {% endfor %}
+            </table>  
+            <h3>Go to <a href="/account/timeclock">Timeclock</a></h3>
+            {% else %}
+            <!-- Show employee if no time card exists/new employee -->
+            <h3>No timecard history in the system, clock in to get started.</h3>
+            <a href="/account/timeclock"><button>Clock In</button></a>
+            {% endif %}
+             <!-- Show admin if no time card exists/new employee -->
+             <!-- <h3>No timecard history in the system, this is a new employee.</h3> -->
+        </div>
+    </div>      
+</body>
+</html>
