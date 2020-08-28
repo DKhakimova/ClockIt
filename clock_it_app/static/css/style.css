@@ -1,7 +1,11 @@
+* {
+    font-family: 'Anonymous Pro', monospace;
+}
+
 #wrapper {
     width: 980px;
     margin: 0px auto;
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255, 255, 255, 0.6);
     padding: 0px 40px 80px;
 }
 
@@ -11,7 +15,7 @@
 }
 
 header {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     padding: 15px;
     margin-bottom: 35px;
@@ -19,7 +23,8 @@ header {
     border-radius: 5px;
 }
 
-td, th {
+td,
+th {
     border: 1px solid #ddd;
     padding: 10px;
     font-family: Arial, Helvetica, sans-serif;
@@ -39,5 +44,3 @@ table {
 table tr th {
     background-color: rgb(202, 126, 101)
 }
-    
-    
