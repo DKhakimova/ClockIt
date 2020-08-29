@@ -13,28 +13,28 @@
             <!-- Insert logo and link for main page below -->
             <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
             <div id="logout">
-                <a class="logout" href="#">Log Out</a>
+                <a class="logout" href="/logout">Log Out</a>
             </div>
         </header>
         <div id="container">
-            <h2>You are logged in employee of Microsoft</h2>
+            <h3>Logged in as employee of Microsoft</h3>
         {% if not timesheet or timesheet.clock_out_time %}
             {% if timesheet %}
-            <h2>You last clocked out at {{ timesheet.clock_out_time }}</h2>
+            <h2>Last clocked out at {{ timesheet.clock_out_time }}</h2>
             {% endif %}
             <form action="/account/clock_in" method="POST">
             {% csrf_token %}
                 <input type="submit" value="Clock In">
             </form>
         {% else %}
-            <h2>You clocked in at {{ timesheet.clock_in_time }}</h2>
+            <h2>Clocked in at {{ timesheet.clock_in_time }}</h2>
             <form action="/account/clock_out" method="POST">
             {% csrf_token %}
                 <input type="submit" value="Clock Out">
             </form>
         {% endif %}
             <!-- Insert link for timecard below -->
-            <h2>See Your <a href="/account/timecard">Timecard</a></h2>
+            <h3>See Your <a href="/account/timecard">Timecard</a></h3>
         </div>
     </div>    
 </body>

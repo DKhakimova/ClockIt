@@ -34,10 +34,10 @@
                 </tr>
                 {% for timesheet in all_timesheets %}
                 <tr>
-                    <td>{{ timesheet.clock_in_time}}</td>
+                    <td>{{ timesheet.date}}</td>
                     <td>{{ timesheet.clock_in_time }}</td>
                     <td>{{ timesheet.clock_out_time }}</td>
-                    <td>{{ timesheet.clock_out_time }}</td>
+                    <td>{{ timesheet.hours }}</td>
                 </tr>
                 {% endfor %}
             </table>  
