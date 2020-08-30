@@ -4,9 +4,9 @@ from time import strftime
 from django.contrib import messages
 from .models import Company, Timesheet
 from login_registration_app.models import User
-import uuid
+import random
 
-def newCompany(request):
+def new_company(request):
     return render(request, 'create_company.html')
 
 def timeclock(request):
@@ -15,11 +15,13 @@ def timeclock(request):
 
     user = User.objects.get(id=request.session['user_id'])
     timesheet = Timesheet.objects.filter(employee=user).last()
-    timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p %B %d, %Y")
-    if timesheet.clock_out_time:
-        timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p %B %d, %Y")
+    if timesheet:
+        timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p %B %d, %Y")
+        if timesheet.clock_out_time:
+            timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p %B %d, %Y")
     context = {
-        'timesheet': timesheet
+        'timesheet': timesheet,
+        'user': User.objects.get(id=request.session['user_id'])
     }
     return render(request, 'time_clock.html', context)
 
@@ -67,34 +69,52 @@ def clock_out(request):
     timesheet.save()
     return redirect("/account/timeclock")
 
-def createCompany(request):
+def add_user_to_company(request):
+    company = Company.objects.get(code=request.POST['code'])
+    user = User.objects.get(id=request.session['user_id'])
+    print('\n\n', company, '\n\n\n')
+    user.company = company
+    user.save()
+    return redirect("/account/timeclock")
+
+def create_company(request):
     errors = Company.objects.validate(request.POST)
     if errors:
         for field, value in errors.items():
             messages.error(request, value, extra_tags='new')
-            return redirect('/company/new')
+            return redirect('/account/company/new')
     # user = User.objects.get(id=request.session['user_id'])
     n = request.POST.copy()
     # n['user'] = user
-    company = Company.objects.companyCreate(n)
-    return redirect('/company/' + str(company.id))
+    company = Company.objects.company_create(n)
+    return redirect('/account/company/' + str(company.id))
 
 
-def viewCompany(request, company_id):
+def view_company(request, company_id):
     context = {
         'company': Company.objects.get(id=company_id)
     }
     return render(request, 'view_company.html', context)
 
-def generateCode(request, company_id):
+def generate_code(request, company_id):
     company = Company.objects.get(id=company_id)
-    company.code = uuid.uuid4()
+    company.code = random.randint(100000, 999999)
     company.save()
-    return redirect('/company/' + str(company.id))
+    return redirect('/account/company/' + str(company.id))
 
 
-def timeEntryDashboard(request, company_id):
+def time_entry_dashboard(request, company_id):
+    company = Company.objects.get(id=company_id)
+    user = User.objects.filter(id=request.session['user_id'])
+    users = User.objects.filter(company=company)
+    for user in users:
+        last_timesheet_status = Timesheet.objects.filter(user=user).last()
+        if last_timesheet_status.clock_out_time:
+            user['last_timesheet_status'] = 'Last clocked out at ' + str(last_timesheet_status.clock_out_time)
+        else:
+            user['last_timesheet_status'] = 'Currently clocked in'
     context = {
-        'company': Company.objects.get(id=company_id)
+        'company': company,
+        'users': users
     }
     return render(request, 'time_entry_dashboard.html', context)

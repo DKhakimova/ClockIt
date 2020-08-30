@@ -17,7 +17,7 @@
             </div>
         </header>
         <div id="container">
-            <h3>Logged in as employee of Microsoft</h3>
+            <h2>You are logged in employee of {{ user.company.name }}</h2>
         {% if not timesheet or timesheet.clock_out_time %}
             {% if timesheet %}
             <h2>Last clocked out at {{ timesheet.clock_out_time }}</h2>
