@@ -8,24 +8,33 @@ import uuid
 def newCompany(request):
     return render(request, 'create_company.html')
 
-def index(request):
-    return HttpResponse("hello guys")
-
 def timeclock(request):
     # context = {
     #     'user': User.objects.get(id=request.session['user_id']),
     # }
     timesheet = Timesheet.objects.last()
-    # timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p" "%B %d, %Y")
+    timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p %B %d, %Y")
+    if timesheet.clock_out_time:
+        timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p %B %d, %Y")
     context = {
         'timesheet': timesheet
     }
     return render(request, 'time_clock.html', context)
 
 def user_timecard(request):
+    all_timesheets = Timesheet.objects.all()
+    for timesheet in all_timesheets:
+        timesheet.date = timesheet.clock_in_time.strftime("%B %d, %Y")
+        timesheet.hours = None
+        if timesheet.clock_out_time:
+            timesheet.hours = (timesheet.clock_out_time - timesheet.clock_in_time).total_seconds()/3600
+            timesheet.hours = round(timesheet.hours, 2)
+            timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p")
+        timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p")
+        
     context = {
-    #     # 'user': User.objects.get(id=request.session['user_id']),
-        'all_timesheets': Timesheet.objects.all()
+    # 'user': User.objects.get(id=request.session['user_id']),
+        'all_timesheets': all_timesheets,
     }
     return render(request, 'user_timecard.html', context)
 
