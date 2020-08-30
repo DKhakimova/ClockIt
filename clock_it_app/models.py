@@ -7,6 +7,7 @@ class Timesheet(models.Model):
     clock_out_time = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    employee = models.ForeignKey('login_registration_app.User', related_name='employee_timesheet', on_delete=models.CASCADE, default='', null=True, blank=True)
 
 
 class CompanyManager(models.Manager):

@@ -2,17 +2,19 @@ from django.shortcuts import render, redirect, HttpResponse
 from datetime import datetime
 from time import strftime
 from django.contrib import messages
-from .models import Company, User, Timesheet
+from .models import Company, Timesheet
+from login_registration_app.models import User
 import uuid
 
 def newCompany(request):
     return render(request, 'create_company.html')
 
 def timeclock(request):
-    # context = {
-    #     'user': User.objects.get(id=request.session['user_id']),
-    # }
-    timesheet = Timesheet.objects.last()
+    if 'user_id' not in request.session:
+        return redirect('/')
+
+    user = User.objects.get(id=request.session['user_id'])
+    timesheet = Timesheet.objects.filter(employee=user).last()
     timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p %B %d, %Y")
     if timesheet.clock_out_time:
         timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p %B %d, %Y")
@@ -22,7 +24,11 @@ def timeclock(request):
     return render(request, 'time_clock.html', context)
 
 def user_timecard(request):
-    all_timesheets = Timesheet.objects.all()
+    if 'user_id' not in request.session:
+        return redirect('/')
+
+    user = User.objects.get(id=request.session['user_id'])
+    all_timesheets = Timesheet.objects.filter(employee=user)
     for timesheet in all_timesheets:
         timesheet.date = timesheet.clock_in_time.strftime("%B %d, %Y")
         timesheet.hours = None
@@ -31,20 +37,32 @@ def user_timecard(request):
             timesheet.hours = round(timesheet.hours, 2)
             timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p")
         timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p")
-        
+
     context = {
-    # 'user': User.objects.get(id=request.session['user_id']),
         'all_timesheets': all_timesheets,
     }
+
     return render(request, 'user_timecard.html', context)
 
 def clock_in(request):
-    # user = User.objects.get(id=request.session['user_id'])
-    Timesheet.objects.create()
+    if 'user_id' not in request.session:
+        return redirect('/')
+
+    users = User.objects.all()
+    print(users)
+    print("User id:")
+    print(request.session['user_id'])
+    Timesheet.objects.create(
+        employee = User.objects.get(id=request.session['user_id'])
+    )
     return redirect("/account/timeclock")
     
 def clock_out(request):
-    timesheet = Timesheet.objects.last()
+    if 'user_id' not in request.session:
+        return redirect('/')
+
+    user = User.objects.get(id=request.session['user_id'])
+    timesheet = Timesheet.objects.filter(employee=user).last()
     timesheet.clock_out_time = datetime.now()
     timesheet.save()
     return redirect("/account/timeclock")

@@ -24,13 +24,13 @@
             {% endif %}
             <form action="/account/clock_in" method="POST">
             {% csrf_token %}
-                <input type="submit" value="Clock In">
+                <input id="clock_in_button" type="submit" value="Clock In">
             </form>
         {% else %}
             <h2>Clocked in at {{ timesheet.clock_in_time }}</h2>
             <form action="/account/clock_out" method="POST">
             {% csrf_token %}
-                <input type="submit" value="Clock Out">
+                <input id="clock_out_button"type="submit" value="Clock Out">
             </form>
         {% endif %}
             <!-- Insert link for timecard below -->
