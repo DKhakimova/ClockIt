@@ -25,12 +25,13 @@ def timeclock(request):
     }
     return render(request, 'time_clock.html', context)
 
-def user_timecard(request):
+def user_timecard(request, user_id):
     if 'user_id' not in request.session:
         return redirect('/')
 
-    user = User.objects.get(id=request.session['user_id'])
-    all_timesheets = Timesheet.objects.filter(employee=user)
+    authenticated_user = User.objects.get(id=request.session['user_id'])
+    clicked_user = User.objects.get(id=user_id)
+    all_timesheets = Timesheet.objects.filter(employee=clicked_user)
     for timesheet in all_timesheets:
         timesheet.date = timesheet.clock_in_time.strftime("%B %d, %Y")
         timesheet.hours = None
@@ -42,6 +43,8 @@ def user_timecard(request):
 
     context = {
         'all_timesheets': all_timesheets,
+        'authenticated_user': authenticated_user,
+        'clicked_user': clicked_user
     }
 
     return render(request, 'user_timecard.html', context)
@@ -87,6 +90,11 @@ def create_company(request):
     n = request.POST.copy()
     # n['user'] = user
     company = Company.objects.company_create(n)
+    # when user creates company, they become an admin
+    user = User.objects.get(id=request.session['user_id'])
+    user.admin = True
+    user.company = company
+    user.save()
     return redirect('/account/company/' + str(company.id))
 
 
@@ -106,13 +114,18 @@ def generate_code(request, company_id):
 def time_entry_dashboard(request, company_id):
     company = Company.objects.get(id=company_id)
     user = User.objects.filter(id=request.session['user_id'])
-    users = User.objects.filter(company=company)
+    users = User.objects.filter(company=company).filter(admin=False)
+    # add last_timesheet_status to each user at runtime
     for user in users:
-        last_timesheet_status = Timesheet.objects.filter(user=user).last()
-        if last_timesheet_status.clock_out_time:
-            user['last_timesheet_status'] = 'Last clocked out at ' + str(last_timesheet_status.clock_out_time)
+        last_timesheet_status = Timesheet.objects.filter(employee=user).last()
+        if last_timesheet_status:
+            if last_timesheet_status.clock_out_time:
+                user.last_timesheet_status = 'Last clocked out at ' + \
+                    str(last_timesheet_status.clock_out_time.strftime("%I:%M %p"))
+            else:
+                user.last_timesheet_status = 'Currently clocked in'
         else:
-            user['last_timesheet_status'] = 'Currently clocked in'
+            user.last_timesheet_status = 'Employee has not yet clocked in'
     context = {
         'company': company,
         'users': users

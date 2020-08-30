@@ -14,8 +14,7 @@ class CompanyManager(models.Manager):
   
     def company_create(self, form_data):
         return self.create(
-            name=form_data['name'],
-            # admin=form_data['admin']
+            name=form_data['name']
         )
 
 
