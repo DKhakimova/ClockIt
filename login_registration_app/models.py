@@ -1,4 +1,5 @@
 from django.db import models
+from clock_it_app.models import Company
 import re
 
 # Create your models here.
@@ -48,6 +49,7 @@ class User(models.Model):
   password = models.CharField(max_length=255)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
+  company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE)
 
   objects = UserManager()
 

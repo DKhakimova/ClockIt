@@ -30,7 +30,7 @@ def register(request):
   else:
 
     password = request.POST['password']
-    pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+    pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
     User.objects.create(
       first_name = request.POST['first'],
@@ -60,7 +60,7 @@ def login(request):
 
 def pin(request):
    pass
-     
+
 
 #def create(request):
  # if request.method == "GET":

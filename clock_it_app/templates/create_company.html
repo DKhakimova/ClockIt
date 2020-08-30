@@ -15,7 +15,7 @@
     <h2>Create Company</h2>
   </header>
   <section class="create">
-    <form action="/company/create" method="POST">
+    <form action="create" method="POST">
       {% csrf_token %}
       <p><label class="label" for="name">Company Name</label>
         <input type="text" name="name" id="name"></p>

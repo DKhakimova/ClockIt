@@ -12,14 +12,14 @@
     <h1>{{company.name}}</h1>
   </header>
   {% if company.code %}
-  <a href="/company/{{company.id}}/time-entry-dashboard" class="view-dashboard">Time Entry Dashboard</a>
+  <a href="{{company.id}}/time-entry-dashboard" class="view-dashboard">Time Entry Dashboard</a>
   <div class="company-code">
     <p>Your company code is </span><span>{{company.code}}</p>
     <p>Share with your employees for their registration</p>
   </div>
   {% else %}
   <h3>Generate a code and invite employees!</h3>
-  <form action="/company/{{company.id}}/generate-code">
+  <form action="{{company.id}}/generate-code">
     <button>Generate Code</button>
   </form>
   {% endif %}

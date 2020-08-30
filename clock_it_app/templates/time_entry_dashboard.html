@@ -1,15 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>ClockIt</title>
 </head>
+
 <body>
+  <p><a href="/logout">Logout</a></p>
   <header>
     <h1>{{company.name}}</h1>
     <h3>Time Entry Dashboard</h3>
+    <h4>Track employee hours:</h4>
   </header>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td><a href="/account/timecard">{{ user.first_name}} {{ user.last_name}}</a></td>
+        <td>{{ user.last_timesheet_status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 </body>
+
 </html>
