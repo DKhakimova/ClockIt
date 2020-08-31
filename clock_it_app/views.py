@@ -14,6 +14,9 @@ def timeclock(request):
         return redirect('/')
 
     user = User.objects.get(id=request.session['user_id'])
+    if not user.company:
+        return redirect('/success')
+
     timesheet = Timesheet.objects.filter(employee=user).last()
     if timesheet:
         timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p %B %d, %Y")
