@@ -5,24 +5,11 @@ from clock_it_app.models import Company
 import bcrypt
 
 
-# Create your views here.
 def index(request):
   context = {
     'users': User.objects.all(),
   }
   return render(request, 'index.html', context)
-
-
-def success(request):
-  if 'user_id' not in request.session:
-    return redirect('/')
-  else:
-    user = User.objects.get(id=request.session['user_id'])
-    if user.admin:
-      return redirect('/account/company/' + str(user.company.id) + '/time-entry-dashboard')
-    elif user.company:
-      return redirect('/account/timeclock')
-    return render(request, 'success.html')
 
 
 def register(request):
@@ -54,7 +41,7 @@ def login(request):
         if bcrypt.checkpw(request.POST['password'].encode(), results[0].password.encode()):
             request.session['user_id'] = results[0].id
             request.session["name"] = (f"{results[0].first_name} {results[0].last_name}")
-            return redirect('/success')
+            return redirect('/account')
             
         else:
             messages.error(request, "Email or password did not match.")
@@ -63,8 +50,20 @@ def login(request):
         messages.error(request, "Email or password did not match.")
         return redirect("/")
 
-def pin(request):
+
+def pinpad(request):
    return render(request, 'pin.html')
+
+
+def pin_verification(request):
+  if request.method == "POST":
+    print('testing')
+    user = User.objects.filter(pin=request.POST['pin']).first()
+    if user:
+      request.session['user_id'] = user.id
+      request.session["name"] = (f"{user.first_name} {user.last_name}")
+      return redirect("/account/timeclock")
+  return redirect("/pin")
 
 def logout(request):
   request.session.flush()

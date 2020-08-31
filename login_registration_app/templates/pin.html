@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="{% static 'css/design.css' %}">
 </head>
 <body>
-  <form action="" method="post">
+  <form action="/pin_verification" method="POST">
+  {% csrf_token %}
     <input id="pin_input" name="pin" value="" placeholder="Use numpad or enter pin here" />
     <div class="playground">
       <div class="numpad">

@@ -41,6 +41,7 @@ class User(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE)
+  pin = models.IntegerField(null=True)
 
   objects = UserManager()
 
