@@ -17,7 +17,7 @@
             </div>
         </header>
         <div id="container">
-            <h2>You are logged in employee of {{ user.company.name }}</h2>
+            <h2>You are logged in as an employee of {{ user.company.name }}</h2>
         {% if not timesheet or timesheet.clock_out_time %}
             {% if timesheet %}
             <h2>Last clocked out at {{ timesheet.clock_out_time }}</h2>
@@ -33,8 +33,7 @@
                 <input id="clock_out_button"type="submit" value="Clock Out">
             </form>
         {% endif %}
-            <!-- Insert link for timecard below -->
-            <h3>See Your <a href="/account/timecard">Timecard</a></h3>
+            <h3>See Your <a href="/account/timecard/{{ user.id }}">Timecard</a></h3>
         </div>
     </div>    
 </body>

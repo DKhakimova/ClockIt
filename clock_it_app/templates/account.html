@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration and Login</title>
+  <title>User Account</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
     integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 </head>
@@ -22,7 +22,7 @@
       <h3><a button class="btn btn-outline-dark" href="/account/company/new"> Create a Company</a>
         <p> OR </p>
           <div class="col-md-6">
-            <form action="account/company/user" method="post" class="form-group w-75">
+            <form action="/account/company/user" method="post" class="form-group w-75">
               {% csrf_token %}
               <input type="text" name="code" id="pss" class="form-control">
               <h3><button class="btn btn-outline-dark"> Join company</button></h3>
@@ -30,5 +30,4 @@
           </div>
     </div>
 </body>
-
 </html>

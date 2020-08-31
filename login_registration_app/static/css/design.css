@@ -1,0 +1,75 @@
+* {
+	box-sizing: border-box;
+}
+.numpad {
+	width: 420px;
+	height: 500px;
+	
+	display: flex;
+	flex-flow: row wrap;
+}
+.button {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 33.3333%;
+	
+	background-color: #F9A03F;
+	color: white;
+	border: 1px solid rgba(255, 255, 255, .25);
+	font-size: 32px;
+}
+.button:hover {
+	background-color: rgb(187, 119, 46);
+}
+
+
+
+.playground {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f1f1f1;
+}
+
+
+.general {
+	position: fixed;
+	left: 0;
+	right: 0;
+	
+	display: flex;
+	height: 40px;
+	padding: 0 20px;
+	
+	background-color: white;
+}
+.general a {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	
+	font-family: "source-code-pro";
+	font-size: .8rem;
+	text-decoration: none;
+	
+	color: #c9c9c9;
+	transition: color 300ms ease;
+}
+.general a:hover {
+	background-color: rgb(187, 119, 46);
+}
+.general a:last-of-type {
+	justify-content: flex-end;
+}
+
+#pin_input {
+	display: block;
+	margin: 20px auto;
+	height: 60px;
+	width: 420px;
+	padding: 20px;
+	font-size: 20px;
+}

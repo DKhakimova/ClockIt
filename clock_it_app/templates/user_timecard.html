@@ -23,7 +23,7 @@
             <h3>Employee PIN: {{ clicked_user.pin }}</h3>
             <h3>Employee Timecard History:</h3>
             {% else %}
-            <h2>Your PIN for Microsoft is 1234</h2>
+            <h2>Your PIN for {{ clicked_user.company.name }} is {{ clicked_user.pin }}</h2>
             <h3>Timecard History:</h3>
             {% endif %}
             {% if all_timesheets %}
@@ -47,12 +47,9 @@
             <h3>Go to <a href="/account/timeclock">Timeclock</a></h3>
             {% endif %}
             {% else %}
-            <!-- Show employee if no time card exists/new employee -->
             <h3>No timecard history in the system, clock in to get started.</h3>
             <a href="/account/timeclock"><button>Clock In</button></a>
             {% endif %}
-             <!-- Show admin if no time card exists/new employee -->
-             <!-- <h3>No timecard history in the system, this is a new employee.</h3> -->
         </div>
     </div>      
 </body>

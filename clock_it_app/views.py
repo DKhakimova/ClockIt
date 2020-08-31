@@ -1,10 +1,22 @@
 from django.shortcuts import render, redirect, HttpResponse
 from datetime import datetime
+import pytz
 from time import strftime
 from django.contrib import messages
 from .models import Company, Timesheet
 from login_registration_app.models import User
 import random
+
+def account(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    else:
+        user = User.objects.get(id=request.session['user_id'])
+    if user.admin:
+        return redirect('/account/company/' + str(user.company.id) + '/time-entry-dashboard')
+    elif user.company:
+        return redirect('/account/timeclock')
+    return render(request, 'account.html')
 
 def new_company(request):
     return render(request, 'create_company.html')
@@ -14,11 +26,14 @@ def timeclock(request):
         return redirect('/')
 
     user = User.objects.get(id=request.session['user_id'])
+    if not user.company:
+        return redirect('/account')
+
     timesheet = Timesheet.objects.filter(employee=user).last()
     if timesheet:
-        timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p %B %d, %Y")
+        timesheet.clock_in_time = timesheet.clock_in_time.astimezone(pytz.timezone("US/Pacific")).strftime("%I:%M %p %B %d, %Y")
         if timesheet.clock_out_time:
-            timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p %B %d, %Y")
+            timesheet.clock_out_time = timesheet.clock_out_time.astimezone(pytz.timezone("US/Pacific")).strftime("%I:%M %p %B %d, %Y")
     context = {
         'timesheet': timesheet,
         'user': User.objects.get(id=request.session['user_id'])
@@ -38,14 +53,16 @@ def user_timecard(request, user_id):
         if timesheet.clock_out_time:
             timesheet.hours = (timesheet.clock_out_time - timesheet.clock_in_time).total_seconds()/3600
             timesheet.hours = round(timesheet.hours, 2)
-            timesheet.clock_out_time = timesheet.clock_out_time.strftime("%I:%M %p")
-        timesheet.clock_in_time = timesheet.clock_in_time.strftime("%I:%M %p")
+            timesheet.clock_out_time = timesheet.clock_out_time.astimezone(pytz.timezone("US/Pacific")).strftime("%I:%M %p")
+        timesheet.clock_in_time = timesheet.clock_in_time.astimezone(pytz.timezone("US/Pacific")).strftime("%I:%M %p")
 
     context = {
         'all_timesheets': all_timesheets,
         'authenticated_user': authenticated_user,
-        'clicked_user': clicked_user
+        'clicked_user': clicked_user,
     }
+
+    print(random.randrange(100000,999999));
 
     return render(request, 'user_timecard.html', context)
 
@@ -72,10 +89,10 @@ def clock_out(request):
 def add_user_to_company(request):
     company = Company.objects.get(code=request.POST['code'])
     user = User.objects.get(id=request.session['user_id'])
-    print('\n\n', company, '\n\n\n')
     user.company = company
+    user.pin = random.randint(100000, 999999)
     user.save()
-    return redirect("/account/timeclock")
+    return redirect("/account/timecard/" + str(user.id))
 
 def create_company(request):
     errors = Company.objects.validate(request.POST)

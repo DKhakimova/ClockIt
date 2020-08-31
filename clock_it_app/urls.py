@@ -2,6 +2,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('', views.account),
     path('timeclock', views.timeclock),
     path('timecard/<int:user_id>', views.user_timecard),
     path('clock_in', views.clock_in),

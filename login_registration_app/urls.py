@@ -3,10 +3,9 @@ from . import views
 
 urlpatterns = [
   path('', views.index),
-  #path('create', views.create),
-  path('success', views.success),
   path('register', views.register),
-  path('pin', views.pin),
+  path('pinpad', views.pinpad),
+  path('pin_verification', views.pin_verification),
   path('login', views.login),
   path('logout', views.logout)
 ]
