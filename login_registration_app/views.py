@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from .models import User
+from clock_it_app.models import Company
 import bcrypt
 
 
@@ -17,7 +18,11 @@ def success(request):
   if 'user_id' not in request.session:
     return redirect('/')
   else:
-    return render(request, 'success.html')
+    user = User.objects.get(id=request.session['user_id'])
+    if user.admin:
+      return redirect('/account/company/' + str(user.company.id) + '/time-entry-dashboard')
+    else:
+      return render(request, 'success.html')
 
 
 def register(request):

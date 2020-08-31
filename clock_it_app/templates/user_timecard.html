@@ -18,12 +18,14 @@
         </header>
         <div id="container">
             <!-- If user is employee show -->
+            {% if authenticated_user.admin %}
+            <h3>Employee Name: {{ clicked_user.first_name}} {{ clicked_user.last_name}}</h3>
+            <h3>Employee PIN: {{ clicked_user.pin }}</h3>
+            <h3>Employee Timecard History:</h3>
+            {% else %}
             <h2>Your PIN for Microsoft is 1234</h2>
             <h3>Timecard History:</h3>
-            <!-- If user is admin show: -->
-            <!-- <h3>Employee Name: Jon Snow</h3>
-            <h3>Employee PIN: 1234</h3>
-            <h3>Employee Timecard History:</h3> -->
+            {% endif %}
             {% if all_timesheets %}
             <table>
                 <tr>
@@ -41,7 +43,9 @@
                 </tr>
                 {% endfor %}
             </table>  
+            {% if not authenticated_user.admin %}
             <h3>Go to <a href="/account/timeclock">Timeclock</a></h3>
+            {% endif %}
             {% else %}
             <!-- Show employee if no time card exists/new employee -->
             <h3>No timecard history in the system, clock in to get started.</h3>

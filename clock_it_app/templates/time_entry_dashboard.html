@@ -15,18 +15,19 @@
     <h1>{{company.name}}</h1>
     <h3>Time Entry Dashboard</h3>
     <h4>Track employee hours:</h4>
+    <h4>Company Code: {{ company.code }}</h4>
   </header>
   <table>
     <thead>
       <tr>
-        <th>User</th>
+        <th>Employee</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody>
       {% for user in users %}
       <tr>
-        <td><a href="/account/timecard">{{ user.first_name}} {{ user.last_name}}</a></td>
+        <td><a href="/account/timecard/{{user.id}}">{{ user.first_name}} {{ user.last_name}}</a></td>
         <td>{{ user.last_timesheet_status }}</td>
       </tr>
       {% endfor %}

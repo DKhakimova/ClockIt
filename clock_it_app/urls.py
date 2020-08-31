@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('timeclock', views.timeclock),
-    path('timecard', views.user_timecard),
+    path('timecard/<int:user_id>', views.user_timecard),
     path('clock_in', views.clock_in),
     path('clock_out', views.clock_out),
     path('company/user', views.add_user_to_company),

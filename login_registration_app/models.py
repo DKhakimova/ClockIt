@@ -47,6 +47,7 @@ class User(models.Model):
   last_name = models.CharField(max_length=255)
   email = models.CharField(max_length=255)
   password = models.CharField(max_length=255)
+  admin = models.BooleanField(default = False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE)
