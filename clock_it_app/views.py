@@ -54,9 +54,6 @@ def clock_in(request):
         return redirect('/')
 
     users = User.objects.all()
-    print(users)
-    print("User id:")
-    print(request.session['user_id'])
     Timesheet.objects.create(
         employee = User.objects.get(id=request.session['user_id'])
     )
