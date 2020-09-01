@@ -10,14 +10,12 @@
 <body>
     <div id="wrapper">
         <header>
-            <!-- Insert logo and link for main page below -->
             <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
             <div id="logout">
                 <a class="logout" href="/logout">Log Out</a>
             </div>
         </header>
         <div id="container">
-            <!-- If user is employee show -->
             {% if authenticated_user.admin %}
             <h3>Employee Name: {{ clicked_user.first_name}} {{ clicked_user.last_name}}</h3>
             <h3>Employee PIN: {{ clicked_user.pin }}</h3>

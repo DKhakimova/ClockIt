@@ -9,8 +9,10 @@ def index(request):
   context = {
     'users': User.objects.all(),
   }
-  return render(request, 'index.html', context)
+  return render(request, 'login.html', context)
 
+def registration_page(request):
+      return render(request, 'registration.html')
 
 def register(request):
   errors = User.objects.validate(request.POST)
