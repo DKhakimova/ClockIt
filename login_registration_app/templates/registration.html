@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration and Login</title>
+  <title>User Registration</title>
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 </head>
 <body class="bg-light text-black">
 <nav class="bg-info">
   <div class="d-flex container text-white p-3">
     <h4 class="mr-auto">ClockIt</h4>
-    <a href="/pinpad" class="btn btn-outline-light mt-1" id="pin">Quick pin login</a>
+    <a button class="btn btn-outline-light mt-1" href="/pin"> Quick pin login</a>
   </div>
   </nav>
   <div class="container mt-5">
@@ -39,17 +39,6 @@
             <button class="btn btn-outline-info mt-3" id="reg">Register</button>
             </form>
           </div>
-      <div class="col-md-6">
-        <h4 class="mb-3">Log In</h4>
-        <form action="/login" method="post" class="form-group w-75">
-        {% csrf_token %}
-        <label for="eml">Email</label>
-        <input type="email" name="email" id="eml" class="form-control mb-2">
-        <label for="pss">Password</label>
-        <input type="password" name="password" id="pss" class="form-control">
-        <button class="btn btn-outline-info mt-3">Log In</button>
-        </form>
-      </div>
     </div>
   </div>
 </body>
