@@ -5,29 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Account</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<body class="bg-light text-black">
-  <nav class="bg-info">
-    <div class="d-flex container text-black p-3">
-      <h4 class="mr-auto text-white">ClockIt</h4>
-      <a href="/logout" class="btn btn-sm text-white">Log out</a>
-    </div>
-  </nav>
-  <div class="row">
-    <div class="col-md-6">
-      <h4> Welcome, {{request.session.name}} </h4>
-      <h3><a button class="btn btn-outline-dark" href="/account/company/new"> Create a Company</a>
-        <p> OR </p>
-          <div class="col-md-6">
-            <form action="/account/company/user" method="post" class="form-group w-75">
-              {% csrf_token %}
-              <input type="text" name="code" id="pss" class="form-control">
-              <h3><button class="btn btn-outline-dark"> Join company</button></h3>
-            </form>
-          </div>
-    </div>
+<body>
+  <header>
+    <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+        <div id="logout">
+            <a class="logout" href="/logout">Log Out</a>
+        </div>
+  </header>
+  <div id="container">
+      <h2> Welcome, {{request.session.name}} </h2>
+      <h3><a button href="/account/company/new"> Create a Company</a></h3>
+      <p> OR </p>
+      <form action="/account/company/user" method="post">
+      {% csrf_token %}
+        <input id="input_field" type="text" name="code" placeholder="Enter Company Code"></br>
+        <button class="buttons"> Join a Company</button>
+      </form>
+  </div>
 </body>
 </html>

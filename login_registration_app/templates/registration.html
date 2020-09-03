@@ -1,45 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration</title>
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/design.css' %}">
 </head>
-<body class="bg-light text-black">
-<nav class="bg-info">
-  <div class="d-flex container text-white p-3">
-    <h4 class="mr-auto">ClockIt</h4>
-    <a button class="btn btn-outline-light mt-1" href="/pin"> Quick pin login</a>
-  </div>
-  </nav>
-  <div class="container mt-5">
-    {% if messages %}
-    <ul class="messages list-group mt-3 alert alert-primary mb-3">
-      {% for message in messages %}
-      <li class="list-group-item" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="row">
-          <div class="col-md-6">
-            <h4>Registration</h4>
-            <form action="/register" method="post" class="form-group w-75 mt-3">
-            {% csrf_token %}
-            <label for="fn">First Name</label>
-            <input type="text" name="first" id="fn" class="form-control mb-2">
-            <label for="ln">Last Name</label>
-            <input type="text" name="last" id="ln" class="form-control mb-2">
-            <label for="em">Email</label>
-            <input type="email" name="email" id="em" class="form-control mb-2">
-            <label for="ps">Password</label>
-            <input type="password" name="password" id="ps" class="form-control mb-2">
-            <label for="cps">Confirm Password</label>
-            <input type="password" name="cpassword" id="cps" class="form-control">
-            <button class="btn btn-outline-info mt-3" id="reg">Register</button>
+
+<body>
+    <header>
+        <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+        <div id="logout">
+            <a class="logout" href="/">Back to Login</a>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="container">
+            <h2>Registration</h2>
+            {% if messages %}
+            <ul class="messages list-group mt-3 alert alert-primary mb-3">
+                {% for message in messages %}
+                <li class="error-message list-group-item" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form id="registration-form" action="/register" method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="fn">First Name</label>
+                    <input type="text" name="first" id="fn">
+                </div>
+                <div>
+                    <label for="ln">Last Name</label>
+                    <input type="text" name="last" id="ln">
+                </div>
+                <div>
+                    <label for="em">Email</label>
+                    <input type="email" name="email" id="em">
+                </div>
+                <div>
+                    <label for="ps">Password</label>
+                    <input type="password" name="password" id="ps">
+                </div>
+                <div>
+                    <label for="cps">Confirm Password</label>
+                    <input type="password" name="cpassword" id="cps">
+                </div>
+                <div>
+                    <button id="login_button">Register</button>
+                </div>
+                <div id="auth-switch">
+                    Already have an account? <a href="/">Log in</a>
+                </div>
             </form>
-          </div>
+        </div>
+        </form>
     </div>
-  </div>
+    </div>
 </body>
+
 </html>

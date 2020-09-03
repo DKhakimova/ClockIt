@@ -8,47 +8,45 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div id="wrapper">
-        <header>
-            <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
-            <div id="logout">
-                <a class="logout" href="/logout">Log Out</a>
-            </div>
-        </header>
-        <div id="container">
-            {% if authenticated_user.admin %}
-            <h3>Employee Name: {{ clicked_user.first_name}} {{ clicked_user.last_name}}</h3>
-            <h3>Employee PIN: {{ clicked_user.pin }}</h3>
-            <h3>Employee Timecard History:</h3>
-            {% else %}
-            <h2>Your PIN for {{ clicked_user.company.name }} is {{ clicked_user.pin }}</h2>
-            <h3>Timecard History:</h3>
-            {% endif %}
-            {% if all_timesheets %}
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Clocked In</th>
-                    <th>Clocked Out</th>
-                    <th>Number of Hours</th>
-                </tr>
-                {% for timesheet in all_timesheets %}
-                <tr>
-                    <td>{{ timesheet.date}}</td>
-                    <td>{{ timesheet.clock_in_time }}</td>
-                    <td>{{ timesheet.clock_out_time }}</td>
-                    <td>{{ timesheet.hours }}</td>
-                </tr>
-                {% endfor %}
-            </table>  
-            {% if not authenticated_user.admin %}
-            <h3>Go to <a href="/account/timeclock">Timeclock</a></h3>
-            {% endif %}
-            {% else %}
-            <h3>No timecard history in the system, clock in to get started.</h3>
-            <a href="/account/timeclock"><button>Clock In</button></a>
-            {% endif %}
+    <header>
+        <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+        <div id="logout">
+            <a class="logout" href="/logout">Log Out</a>
         </div>
-    </div>      
+    </header>
+    <div id="container">
+        {% if authenticated_user.admin %}
+        <h3>Employee Name: <span>{{ clicked_user.first_name}} {{ clicked_user.last_name}}</span></h3>
+        <h3>Employee PIN: <span>{{ clicked_user.pin }}</span></h3>
+        <h3>Employee Timecard History:</h3>
+        {% else %}
+        <h2>Your PIN for <span>{{ clicked_user.company.name }}</span> is <span>{{ clicked_user.pin }}</span></h2>
+        <h3>Timecard History:</h3>
+        {% endif %}
+        {% if all_timesheets %}
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Clocked In</th>
+                <th>Clocked Out</th>
+                <th>Number of Hours</th>
+            </tr>
+            {% for timesheet in all_timesheets %}
+            <tr>
+                <td>{{ timesheet.date}}</td>
+                <td>{{ timesheet.clock_in_time }}</td>
+                <td>{{ timesheet.clock_out_time }}</td>
+                <td>{{ timesheet.hours }}</td>
+            </tr>
+            {% endfor %}
+        </table>  
+        {% if not authenticated_user.admin %}
+        <h3>Go to <a href="/account/timeclock">Timeclock</a></h3>
+        {% endif %}
+        {% else %}
+        <h3>No timecard history in the system, clock in to get started.</h3>
+        <a href="/account/timeclock"><button class="buttons">Clock In</button></a>
+        {% endif %}
+    </div>    
 </body>
 </html>

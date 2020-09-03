@@ -5,24 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
   <header>
-    <h1>{{company.name}}</h1>
+    <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+        <div id="logout">
+            <a class="logout" href="/logout">Log Out</a>
+        </div>
   </header>
+  <div id="container">
+    <h1><span>{{company.name}}</span></h1>
   {% if company.code %}
-  <a href="{{company.id}}/time-entry-dashboard" class="view-dashboard">Time Entry Dashboard</a>
-  <div class="company-code">
-    <p>Your company code is </span><span>{{company.code}}</p>
-    <p>Share with your employees for their registration</p>
-  </div>
-  {% else %}
-  <h3>Generate a code and invite employees!</h3>
-  <form action="{{company.id}}/generate-code">
-    <button>Generate Code</button>
+    <a href="{{company.id}}/time-entry-dashboard" class="view-dashboard">Time Entry Dashboard</a>
+    <div class="company-code">
+      <h3>Your company code is <span>{{company.code}}</span></h3>
+      <h3>Share with your employees for their registration</h3>
+    </div>
+    {% else %}
+    <h3>Generate a code and invite employees!</h3>
+    <form action="{{company.id}}/generate-code">
+      <button class="buttons"> Generate Code</button>
   </form>
   {% endif %}
+</div>
 </body>
 
 </html>

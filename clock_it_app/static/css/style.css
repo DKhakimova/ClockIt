@@ -2,16 +2,22 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#wrapper {
-    width: 980px;
-    margin: 0px auto;
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 0px 40px 80px;
-}
-
 #container {
     width: 700px;
     margin: 0px auto;
+    border: 1px solid #dddddd;
+    background-color: #F2EBEB;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+}
+
+span{
+    color: #A66851;
+}
+
+h2, h3, h4{
+    color: #593B34;
 }
 
 header {
@@ -21,6 +27,7 @@ header {
     margin-bottom: 35px;
     border: 1px solid #dddddd;
     border-radius: 5px;
+    background-color: #F2EBEB;
 }
 
 td, th {
@@ -38,6 +45,8 @@ tr:hover {
 table {
     border-collapse: collapse;
     width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 table tr th {
@@ -45,10 +54,32 @@ table tr th {
 }
 
 #clock_in_button, #clock_out_button {
-    padding: 10px;
+    padding: 12px;
     font-size: 20px;
     background-color: rgb(245, 214, 202);
     border-radius: 5px;
     box-shadow: 2px 2px #593B34;
     cursor: pointer;
+    margin: 15px;
+}
+
+.buttons{
+    padding: 8px;
+    font-size: 20px;
+    background-color: rgb(245, 214, 202);
+    border-radius: 5px;
+    box-shadow: 2px 2px #593B34;
+    cursor: pointer;
+    margin: 18px;
+}
+
+#input_field{
+    font-size: 20px;
+    padding: 5px;
+    width: 195px;
+}
+
+label{
+    font-size: 20px;
+    margin-right: 10px;
 }

@@ -5,22 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% load static %}
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <title>ClockIt</title>
 </head>
 
 <body>
-
-  <header class="header">
-    <h2>Create Company</h2>
+  <header>
+    <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+    <div id="logout">
+        <a class="logout" href="/logout">Log Out</a>
+    </div>
   </header>
-  <section class="create">
+  <div id="container">
+    <h1>Create Company</h1>
     <form action="create" method="POST">
       {% csrf_token %}
-      <p><label class="label" for="name">Company Name</label>
-        <input type="text" name="name" id="name"></p>
-        <button>Submit</button>
+      <label for="name">Company Name</label>
+      <input id="input_field" type="text" name="name" id="name"></br>
+      <button class="buttons">Submit</button>
     </form>
+  </div>
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}

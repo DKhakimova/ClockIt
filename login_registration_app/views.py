@@ -6,13 +6,18 @@ import bcrypt
 
 
 def index(request):
+  if 'user_id' in request.session:
+    return redirect('/account')
+
   context = {
     'users': User.objects.all(),
   }
   return render(request, 'login.html', context)
 
 def registration_page(request):
-      return render(request, 'registration.html')
+  if 'user_id' in request.session:
+    return redirect('/account')
+  return render(request, 'registration.html')
 
 def register(request):
   errors = User.objects.validate(request.POST)
@@ -20,7 +25,7 @@ def register(request):
   if errors:
     for values in errors.values():
       messages.error(request, values)
-    return redirect('/')
+    return redirect('/registration')
   else:
 
     password = request.POST['password']
@@ -54,7 +59,9 @@ def login(request):
 
 
 def pinpad(request):
-   return render(request, 'pin.html')
+  if 'user_id' in request.session:
+    return redirect('/account')
+  return render(request, 'pin.html')
 
 
 def pin_verification(request):

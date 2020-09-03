@@ -10,13 +10,18 @@
 </head>
 
 <body>
-  <p><a href="/logout">Logout</a></p>
   <header>
-    <h1>{{company.name}}</h1>
-    <h3>Time Entry Dashboard</h3>
-    <h4>Track employee hours:</h4>
-    <h4>Company Code: {{ company.code }}</h4>
+    <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+        <div id="logout">
+            <a class="logout" href="/logout">Log Out</a>
+        </div>
   </header>
+  <div id="container">
+    <h1><span>{{company.name}}</span></h1>
+    <h3>Time Entry Dashboard</h3>
+    <h3>Company Code: <span>{{ company.code }}</span></h3>
+    <h3>Track employee hours:</h3>
+  </div>
   <table>
     <thead>
       <tr>

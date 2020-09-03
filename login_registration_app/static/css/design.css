@@ -3,20 +3,14 @@
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-#wrapper {
-    width: 980px;
-    margin: 0px auto;
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 0px 40px 80px;
-}
-
 header {
     display: flex;
     justify-content: space-between;
     padding: 15px;
     margin-bottom: 35px;
     border: 1px solid #dddddd;
-    border-radius: 5px;
+	border-radius: 5px;
+	background-color: #F2EBEB;
 }
 
 .numpad {
@@ -43,7 +37,7 @@ header {
 	color: #593B34;
 }
 
-.playground {
+.quick-ping-login {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -89,4 +83,71 @@ header {
 	width: 420px;
 	padding: 20px;
 	font-size: 20px;
+}
+
+#login_button{
+	padding: 8px;
+    font-size: 20px;
+    background-color: rgb(245, 214, 202);
+    border-radius: 5px;
+    box-shadow: 2px 2px #593B34;
+    cursor: pointer;
+	margin: 18px;
+}
+
+label{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+#input_field{
+    font-size: 20px;
+    padding: 5px;
+    width: 195px;
+}
+
+#container {
+    width: 700px;
+    margin: 0px auto;
+    border: 1px solid #dddddd;
+    background-color: #F2EBEB;
+    border-radius: 5px;
+    text-align: center;
+	padding: 20px;
+	box-shadow: 10px 10px 40px rgba(0,0,0,0.4);
+}
+
+#wrapper{
+	background-image: url("/static/images/background_image.jpg");
+	padding: 150px;
+}
+
+#login-form label, #registration-form label {
+	width: 170px;
+	display: inline-block;
+	text-align: right;
+	line-height: 55px;
+}
+
+#login-form input, #registration-form input {
+	width: 200px;
+	line-height: 30px;
+	padding: 0px 10px;
+	font-size: 20px;
+}
+#login-form>div>a { 
+	display: inline-block;
+}
+#auth-switch {
+	margin-top: 10px;
+}
+#auth-switch a {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+#container ul{
+	list-style: none;
+}
+.error-message {
+	color: red;
 }
