@@ -8,32 +8,30 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div id="wrapper">
-        <header>
-            <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
-            <div id="logout">
-                <a class="logout" href="/logout">Log Out</a>
-            </div>
-        </header>
-        <div id="container">
-            <h2>You are logged in as an employee of {{ user.company.name }}</h2>
-        {% if not timesheet or timesheet.clock_out_time %}
-            {% if timesheet %}
-            <h2>Last clocked out at {{ timesheet.clock_out_time }}</h2>
-            {% endif %}
-            <form action="/account/clock_in" method="POST">
-            {% csrf_token %}
-                <input id="clock_in_button" type="submit" value="Clock In">
-            </form>
-        {% else %}
-            <h2>Clocked in at {{ timesheet.clock_in_time }}</h2>
-            <form action="/account/clock_out" method="POST">
-            {% csrf_token %}
-                <input id="clock_out_button"type="submit" value="Clock Out">
-            </form>
-        {% endif %}
-            <h3>See Your <a href="/account/timecard/{{ user.id }}">Timecard</a></h3>
+    <header>
+        <div id="logo"><a href="/"><img src="/static/images/logo.png" /></a></div>
+        <div id="logout">
+            <a class="logout" href="/logout">Log Out</a>
         </div>
-    </div>    
+    </header>
+    <div id="container">
+        <h2>Logged in as an employee of <span>{{ user.company.name }}</span></h2>
+    {% if not timesheet or timesheet.clock_out_time %}
+        {% if timesheet %}
+        <h2>Last clocked out at <span>{{ timesheet.clock_out_time }}</span></h2>
+        {% endif %}
+        <form action="/account/clock_in" method="POST">
+        {% csrf_token %}
+            <input id="clock_in_button" type="submit" value="CLOCK IN">
+        </form>
+    {% else %}
+        <h2>Clocked in at <span>{{ timesheet.clock_in_time }}</span></h2>
+        <form action="/account/clock_out" method="POST">
+        {% csrf_token %}
+            <input id="clock_out_button"type="submit" value="CLOCK OUT">
+        </form>
+    {% endif %}
+        <h3>See Your <a href="/account/timecard/{{ user.id }}">Timecard</a></h3>
+    </div>   
 </body>
 </html>
